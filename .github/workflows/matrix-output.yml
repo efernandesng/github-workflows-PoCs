@@ -9,8 +9,8 @@ jobs:
     strategy:
       matrix:
         value: ["AA", "BB", "CC"]
-    outputs:
-      out: ${{steps}}
+#    outputs:
+#      out: ${{steps}}
     steps:
       - name: Set Output
         id: sout
@@ -23,4 +23,4 @@ jobs:
       - env:
           NEEDS: ${{ toJSON(needs) }}
         run: |
-          jq -r '."run-matrix".outputs.out' <<< "$NEEDS" | jq .
+          jq -r '."run-matrix"' <<< "$NEEDS" | jq .
