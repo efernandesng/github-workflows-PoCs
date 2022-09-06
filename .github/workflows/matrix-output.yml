@@ -10,7 +10,7 @@ jobs:
       matrix:
         value: ["AA", "BB", "CC"]
     outputs:
-      out: ${{steps.sout.outputs}}
+      out: ${{steps}}
     steps:
       - name: Set Output
         id: sout
