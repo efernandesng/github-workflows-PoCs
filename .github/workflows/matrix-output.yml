@@ -13,6 +13,7 @@ jobs:
       out: ${{ toJSON(steps) }}
     steps:
       - name: Set Output
+        id: sout
         run: |
           echo "::set-output name=${{ matrix.version }}::x${{ matrix.version }}"
   output:
