@@ -16,6 +16,7 @@ jobs:
           echo "::group::My title"
           echo "${{ matrix.value }}::x${{ matrix.value }}"
           echo "::endgroup::"
+          echo "MATRIX_${{ matrix.value }}=${{ matrix.value }}" >> $GITHUB_ENV
           #echo "::set-output name=${{ matrix.value }}::x${{ matrix.value }}"
   output:
     needs: run-matrix
@@ -24,6 +25,7 @@ jobs:
       - env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
-          check_run_url=$(gh api '/repos/efernandesng/github-workflows-PoCs/actions/runs/${{github.run_id}}/jobs' | jq -r '.jobs[0].check_run_url')
-          gh api "$check_run_url"
+          echo "AA: $MATRIX_AA"
+          #jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
+          #check_run_url=$(gh api '/repos/efernandesng/github-workflows-PoCs/actions/runs/${{github.run_id}}/jobs' | jq -r '.jobs[0].check_run_url')
+          #gh api "$check_run_url"
