@@ -17,13 +17,16 @@ jobs:
           echo "${{ matrix.value }}::x${{ matrix.value }}"
           echo "::endgroup::"
           echo "MATRIX_${{ matrix.value }}=${{ matrix.value }}" >> $GITHUB_ENV
+          echo "::notice file=app.js::${{ matrix.value }}"
           #echo "::set-output name=${{ matrix.value }}::x${{ matrix.value }}"
+
   output:
     needs: run-matrix
     runs-on: ubuntu-latest
     steps:
       - env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
         run: |
           echo "AA: $MATRIX_AA"
           #jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
