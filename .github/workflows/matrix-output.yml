@@ -15,9 +15,11 @@ jobs:
       - name: Set Output
         id: matrix-step
         run: |
-          echo "::set-output name=value::x${{ matrix.version }}"
+          echo "::set-output name=${{ matrix.version }}::x${{ matrix.version }}"
   output:
     needs: run-matrix
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{toJSON(needs.matrix.outputs)}}
+      - env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: echo "$NEEDS"
