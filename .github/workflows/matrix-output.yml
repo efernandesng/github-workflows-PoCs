@@ -13,7 +13,10 @@ jobs:
       - name: Set Output
         id: sout
         run: |
-          echo "::set-output name=${{ matrix.value }}::x${{ matrix.value }}"
+          echo "::group::My title"
+          echo "${{ matrix.value }}::x${{ matrix.value }}"
+          echo "::endgroup::"
+          #echo "::set-output name=${{ matrix.value }}::x${{ matrix.value }}"
   output:
     needs: run-matrix
     runs-on: ubuntu-latest
