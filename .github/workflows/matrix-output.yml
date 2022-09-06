@@ -1,0 +1,24 @@
+name: Matrix Output
+
+on:
+  workflow_dispatch:
+
+jobs:
+  matrix:
+    id: matrix
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          values: [1,2,3]
+    outputs:
+      out: ${{ toJSON(steps) }}
+    steps:
+      - name: Set Output
+        id: ${{ matrix.values }}
+        run: |
+          echo "::set-output name=value::x${{ matrix.values }}"
+  output:
+    needs: matrix
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{needs.matrix.outputs.out}}
