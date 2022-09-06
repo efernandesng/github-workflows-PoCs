@@ -13,10 +13,6 @@ jobs:
       - name: Set Output
         id: sout
         run: |
-          echo "::group::My title"
-          echo "${{ matrix.value }}::x${{ matrix.value }}"
-          echo "::endgroup::"
-          echo "MATRIX_${{ matrix.value }}=${{ matrix.value }}" >> $GITHUB_ENV
           echo "::notice file=app.js::${{ matrix.value }}"
           #echo "::set-output name=${{ matrix.value }}::x${{ matrix.value }}"
 
@@ -25,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - env:
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}  
         run: |
-          echo "AA: $MATRIX_AA"
-          #jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
-          check_run_url=$(gh api '/repos/efernandesng/github-workflows-PoCs/actions/runs/${{github.run_id}}/jobs' | jq -r '.jobs[0].check_run_url')
-          gh api "$check_run_url/annotations"
+          check_run_url=$(gh api '/repos/efernandesng/github-workflows-PoCs/actions/runs/${{github.run_id}}/jobs' | jq -r '.jobs[].check_run_url')
+          # gh api "$check_run_url/annotations"
+          while IFS= read -r url; do
+            gh api "$url/annotations" | jq '.[0].message'
+          done <<< "$check_run_url"
