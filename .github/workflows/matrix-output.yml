@@ -10,7 +10,7 @@ jobs:
       matrix:
         value: ["AA", "BB"]
     outputs:
-      job: ${{toJSON(job)}}
+      job: ${{job.container.id}}
     steps:
       - name: Set Output
         id: sout
@@ -23,4 +23,5 @@ jobs:
       - env:
           NEEDS: ${{ toJSON(needs) }}
         run: |
-          jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
+          echo "$NEEDS"
+          #jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
