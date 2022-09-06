@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          values: [1,2,3]
+          value: [1,2,3]
     outputs:
       out: ${{ toJSON(steps) }}
     steps:
       - name: Set Output
-        id: format('{{step-{0}}}', ${{ matrix.values }})
+        id: format('{{step-{0}}}', ${{ matrix.value }})
         run: |
-          echo "::set-output name=value::x${{ matrix.values }}"
+          echo "::set-output name=value::x${{ matrix.value }}"
   output:
     needs: matrix
     runs-on: ubuntu-latest
