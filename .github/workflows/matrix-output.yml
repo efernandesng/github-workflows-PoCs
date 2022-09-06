@@ -7,15 +7,15 @@ jobs:
   run-matrix:
     runs-on: ubuntu-latest
     strategy:
-        matrix:
-          value: [1,2,3]
+      matrix:
+        version: [10, 12, 14]
     outputs:
       out: ${{ toJSON(steps) }}
     steps:
       - name: Set Output
-        id: format('{{step-{0}}}', ${{ matrix.value }})
+        id: format('{{step-{0}}}', ${{ matrix.version }})
         run: |
-          echo "::set-output name=value::x${{ matrix.value }}"
+          echo "::set-output name=value::x${{ matrix.version }}"
   output:
     needs: run-matrix
     runs-on: ubuntu-latest
