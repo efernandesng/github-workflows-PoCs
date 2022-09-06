@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [10, 12, 14]
+        value: ["AA", "BB", "CC"]
     outputs:
-      out: ${{ toJSON(steps) }}
+      ${{ matrix.value }}: xxx
     steps:
       - name: Set Output
         id: sout
         run: |
-          echo "::set-output name=${{ matrix.version }}::x${{ matrix.version }}"
+          echo "::set-output name=${{ matrix.value }}::x${{ matrix.value }}"
   output:
     needs: run-matrix
     runs-on: ubuntu-latest
