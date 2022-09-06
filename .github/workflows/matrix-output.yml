@@ -10,7 +10,7 @@ jobs:
         matrix:
           values: [1,2,3]
     outputs:
-      out: ${{ toJSON(steps) }}
+      out: ${{ steps }}
     steps:
       - name: Set Output
         run: |
@@ -19,4 +19,4 @@ jobs:
     needs: matrix
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{needs.matrix.outputs.out}}
+      - run: echo ${{toJSON(needs.matrix.outputs)}}
