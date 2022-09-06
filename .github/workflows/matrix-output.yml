@@ -10,7 +10,7 @@ jobs:
         matrix:
           values: [1,2,3]
     outputs:
-      out: ${{ steps }}
+      out: ${{ toJSON(steps) }}
     steps:
       - name: Set Output
         run: |
