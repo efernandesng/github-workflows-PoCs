@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  matrix:
+  run-matrix:
     runs-on: ubuntu-latest
     strategy:
         matrix:
@@ -17,7 +17,7 @@ jobs:
         run: |
           echo "::set-output name=value::x${{ matrix.value }}"
   output:
-    needs: matrix
+    needs: run-matrix
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{toJSON(needs.matrix.outputs)}}
