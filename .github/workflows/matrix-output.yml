@@ -22,4 +22,5 @@ jobs:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
-          gh api '/repos/efernandesng/github-workflows-PoCs/actions/runs/${{github.run_id}}/jobs'
+          check_run_url=$(gh api '/repos/efernandesng/github-workflows-PoCs/actions/runs/${{github.run_id}}/jobs' | jq -r '.jobs[0].check_run_url')
+          gh api "$check_run_url"
