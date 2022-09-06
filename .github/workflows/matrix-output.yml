@@ -8,19 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        value: ["AA", "BB", "CC", "_END_"]
-#    outputs:
-#      out: ${{steps}}
+        value: ["AA", "BB"]
+    outputs:
+      job: ${{job}}
     steps:
       - name: Set Output
         id: sout
         run: |
           echo "::set-output name=${{ matrix.value }}::x${{ matrix.value }}"
-      - if: ${{ matrix.value == '_END_' }}
-        env:
-          STEPS: ${{ toJSON(steps) }}
-        run: |
-          jq . <<< "$STEPS"
   output:
     needs: run-matrix
     runs-on: ubuntu-latest
@@ -28,4 +23,4 @@ jobs:
       - env:
           NEEDS: ${{ toJSON(needs) }}
         run: |
-          jq -r '."run-matrix"' <<< "$NEEDS" | jq .
+          jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
