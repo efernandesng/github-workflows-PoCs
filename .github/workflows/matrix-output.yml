@@ -22,4 +22,5 @@ jobs:
     steps:
       - env:
           NEEDS: ${{ toJSON(needs) }}
-        run: echo "$NEEDS"
+        run: |
+          jq . <<< "$NEEDS"
