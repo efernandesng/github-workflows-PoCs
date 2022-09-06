@@ -9,8 +9,6 @@ jobs:
     strategy:
       matrix:
         value: ["AA", "BB"]
-    outputs:
-      job: ${{github.job}}
     steps:
       - name: Set Output
         id: sout
@@ -21,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - env:
-          NEEDS: ${{ toJSON(needs) }}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           jq -r '."run-matrix".outputs.job' <<< "$NEEDS" | jq .
+          gh api '/repos/efernandesng/github-workflows-PoCs/actions/jobs/run-matrix'
