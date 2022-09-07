@@ -13,7 +13,7 @@ jobs:
       - name: Set Output
         id: sout
         run: |
-          echo "::notice file=output::xx${{ matrix.value }}xx"
+          echo "::notice file=output,title=${{ matrix.value }}::xx${{ matrix.value }}xx"
 
   output:
     needs: run-matrix
